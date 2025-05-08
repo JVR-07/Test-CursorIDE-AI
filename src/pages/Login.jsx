@@ -29,10 +29,14 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      await login(formData.username, formData.password);
-      navigate('/');
+      const result = await login(formData.username, formData.password);
+      if (result.success) {
+        navigate('/');
+      } else {
+        setError(result.error);
+      }
     } catch (err) {
-      setError(err.message || 'Error al iniciar sesión');
+      setError('Error al iniciar sesión. Por favor, intenta de nuevo.');
     } finally {
       setIsLoading(false);
     }
